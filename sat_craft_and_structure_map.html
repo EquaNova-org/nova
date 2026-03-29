@@ -1,0 +1,91 @@
+
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+.root-card { background: var(--color-background-primary); border: 2px solid var(--color-border-success); border-radius: var(--border-radius-lg); padding: 14px 20px; text-align: center; max-width: 260px; margin: 0 auto; }
+.root-label { font-size: 11px; letter-spacing: 2px; color: var(--color-text-success); text-transform: uppercase; font-weight: 500; margin-bottom: 4px; }
+.root-title { font-size: 16px; font-weight: 500; color: var(--color-text-primary); }
+.root-sub { font-size: 12px; color: var(--color-text-secondary); margin-top: 2px; }
+.h-bar { position: relative; height: 28px; }
+.h-bar::before { content: ''; position: absolute; left: 50%; top: 0; width: 1px; height: 100%; background: var(--color-border-secondary); }
+.h-bar::after { content: ''; position: absolute; top: 0; left: 16.5%; right: 16.5%; height: 1px; background: var(--color-border-secondary); }
+.branch-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+.branch-col { display: flex; flex-direction: column; align-items: center; }
+.branch-line { width: 1px; height: 24px; background: var(--color-border-secondary); }
+.type-card { width: 100%; background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 14px 16px; cursor: pointer; transition: border-color 0.15s, background 0.15s; user-select: none; }
+.type-card:hover { border-color: var(--color-border-success); background: var(--color-background-secondary); }
+.type-card.active { border-width: 1.5px; border-color: var(--color-border-success); background: var(--color-background-success); }
+.type-tag { display: inline-block; font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 500; padding: 2px 8px; border-radius: 20px; margin-bottom: 8px; }
+.tag-1 { background: var(--color-background-success); color: var(--color-text-success); }
+.tag-2 { background: var(--color-background-warning); color: var(--color-text-warning); }
+.tag-3 { background: var(--color-background-info); color: var(--color-text-info); }
+.type-title { font-size: 14px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 4px; }
+.type-blurb { font-size: 12px; color: var(--color-text-secondary); line-height: 1.5; }
+.detail-panel { background: var(--color-background-secondary); border: 0.5px solid var(--color-border-secondary); border-radius: var(--border-radius-lg); padding: 18px 20px; display: none; }
+.detail-panel.visible { display: block; }
+.panel-title { font-size: 13px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 10px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.panel-body { font-size: 13px; color: var(--color-text-secondary); line-height: 1.65; }
+.panel-body b { color: var(--color-text-primary); font-weight: 500; }
+.example-box { margin-top: 12px; background: var(--color-background-primary); border-left: 2px solid var(--color-border-success); border-radius: 0 var(--border-radius-md) var(--border-radius-md) 0; padding: 10px 14px; font-size: 12px; color: var(--color-text-secondary); line-height: 1.6; }
+.example-box .eq { font-style: italic; color: var(--color-text-primary); }
+.tip-row { display: flex; gap: 6px; align-items: flex-start; margin-top: 10px; font-size: 12px; color: var(--color-text-secondary); }
+.tip-icon { flex-shrink: 0; color: var(--color-text-warning); }
+.close-btn { margin-left: auto; font-size: 12px; color: var(--color-text-tertiary); cursor: pointer; padding: 2px 6px; border-radius: 4px; }
+.close-btn:hover { background: var(--color-background-primary); }
+</style>
+<div style="padding:1.5rem 0 0.5rem;">
+  <div class="root-card">
+    <div class="root-label">Category B</div>
+    <div class="root-title">Craft &amp; Structure</div>
+    <div class="root-sub">~28% of R&amp;W section</div>
+  </div>
+  <div class="h-bar"></div>
+  <div class="branch-row">
+    <div class="branch-col">
+      <div class="branch-line"></div>
+      <div class="type-card" id="card-1" onclick="tog('1')">
+        <div class="type-tag tag-1">Sub-type 1</div>
+        <div class="type-title">Words in context</div>
+        <div class="type-blurb">What does a word or phrase mean as used in this specific passage?</div>
+      </div>
+    </div>
+    <div class="branch-col">
+      <div class="branch-line"></div>
+      <div class="type-card" id="card-2" onclick="tog('2')">
+        <div class="type-tag tag-2">Sub-type 2</div>
+        <div class="type-title">Text structure &amp; purpose</div>
+        <div class="type-blurb">How is the passage organised? What is the author's purpose or rhetorical choice?</div>
+      </div>
+    </div>
+    <div class="branch-col">
+      <div class="branch-line"></div>
+      <div class="type-card" id="card-3" onclick="tog('3')">
+        <div class="type-tag tag-3">Sub-type 3</div>
+        <div class="type-title">Cross-text connections</div>
+        <div class="type-blurb">How do two short passages relate — agree, disagree, extend, or contrast?</div>
+      </div>
+    </div>
+  </div>
+  <div class="detail-panel" id="panel-1">
+    <div class="panel-title"><span class="type-tag tag-1" style="margin:0">Sub-type 1</span> Words in context <span class="close-btn" onclick="cls('1')">✕ close</span></div>
+    <div class="panel-body">These questions give a word or short phrase from the passage and ask what it <b>most nearly means in context</b>. They do not test dictionary definitions — they test how the word is used in that specific sentence and passage.</div>
+    <div class="example-box"><div class="eq">"As used in the text, what does the word 'charged' most nearly mean?"</div><div style="margin-top:6px"><b>Strategy:</b> Substitute each answer choice back into the sentence and see which preserves the original meaning. Eliminate choices that are valid definitions but don't fit context.</div></div>
+    <div class="tip-row"><span class="tip-icon">★</span> The most common trap is picking the most familiar meaning — the SAT almost always uses the word in a less obvious sense.</div>
+  </div>
+  <div class="detail-panel" id="panel-2">
+    <div class="panel-title"><span class="type-tag tag-2" style="margin:0">Sub-type 2</span> Text structure &amp; purpose <span class="close-btn" onclick="cls('2')">✕ close</span></div>
+    <div class="panel-body">These ask <b>why</b> an author wrote something a certain way — the purpose of the whole passage, a paragraph, or a specific sentence. They also test whether students can identify how a text is structured (problem–solution, compare–contrast, claim–evidence).</div>
+    <div class="example-box"><div class="eq">"Which choice best describes the overall structure of the text?"</div><div style="margin-top:6px"><b>Strategy:</b> Ask: what does the author do in the first half vs the second half? The structure mirrors the author's purpose — presenting a problem then a solution, or making a claim then supporting it.</div></div>
+    <div class="tip-row"><span class="tip-icon">★</span> An answer that's factually accurate but misses the tone or intent is usually wrong. Both content and approach must match.</div>
+  </div>
+  <div class="detail-panel" id="panel-3">
+    <div class="panel-title"><span class="type-tag tag-3" style="margin:0">Sub-type 3</span> Cross-text connections <span class="close-btn" onclick="cls('3')">✕ close</span></div>
+    <div class="panel-body">These pair <b>two short passages</b> (Text 1 and Text 2) on a related topic and ask how they relate — agreement, disagreement, one extending the other, or each addressing a different aspect of the same subject.</div>
+    <div class="example-box"><div class="eq">"Based on the texts, how would the author of Text 2 most likely respond to the claim made in Text 1?"</div><div style="margin-top:6px"><b>Strategy:</b> Summarise each text's main point in one sentence before answering, then determine the relationship. The correct answer must be grounded in both texts.</div></div>
+    <div class="tip-row"><span class="tip-icon">★</span> Wrong answers often reference only one text, or exaggerate the degree of agreement or disagreement between the two authors.</div>
+  </div>
+</div>
+<script>
+var act=null;
+function tog(id){if(act===id){cls(id);return;}if(act)cls(act);document.getElementById('panel-'+id).classList.add('visible');document.getElementById('card-'+id).classList.add('active');act=id;}
+function cls(id){document.getElementById('panel-'+id).classList.remove('visible');document.getElementById('card-'+id).classList.remove('active');if(act===id)act=null;}
+</script>

@@ -1,0 +1,320 @@
+
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: var(--font-sans); }
+  .root-card {
+    background: var(--color-background-primary);
+    border: 2px solid var(--color-border-info);
+    border-radius: var(--border-radius-lg);
+    padding: 14px 20px;
+    text-align: center;
+    max-width: 260px;
+    margin: 0 auto 0;
+    cursor: default;
+  }
+  .root-label {
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--color-text-info);
+    text-transform: uppercase;
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+  .root-title {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--color-text-primary);
+  }
+  .root-sub {
+    font-size: 12px;
+    color: var(--color-text-secondary);
+    margin-top: 2px;
+  }
+  .connector-area {
+    display: flex;
+    justify-content: center;
+    height: 28px;
+    position: relative;
+  }
+  .connector-area::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: var(--color-border-secondary);
+  }
+  .h-line {
+    height: 1px;
+    background: var(--color-border-secondary);
+    position: absolute;
+    top: 0;
+  }
+  .branch-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 0 0 20px;
+  }
+  .branch-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+  }
+  .branch-line {
+    width: 1px;
+    height: 24px;
+    background: var(--color-border-secondary);
+  }
+  .type-card {
+    width: 100%;
+    background: var(--color-background-primary);
+    border: 0.5px solid var(--color-border-tertiary);
+    border-radius: var(--border-radius-lg);
+    padding: 14px 16px;
+    cursor: pointer;
+    transition: border-color 0.15s, box-shadow 0.15s, background 0.15s;
+    user-select: none;
+    position: relative;
+  }
+  .type-card:hover {
+    border-color: var(--color-border-info);
+    background: var(--color-background-secondary);
+  }
+  .type-card.active {
+    border-color: var(--color-border-info);
+    border-width: 1.5px;
+    background: var(--color-background-info);
+  }
+  .type-tag {
+    display: inline-block;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-weight: 500;
+    padding: 2px 8px;
+    border-radius: 20px;
+    margin-bottom: 8px;
+  }
+  .tag-a { background: var(--color-background-info); color: var(--color-text-info); }
+  .tag-b { background: var(--color-background-success); color: var(--color-text-success); }
+  .tag-c { background: var(--color-background-warning); color: var(--color-text-warning); }
+  .tag-d { background: var(--color-background-danger); color: var(--color-text-danger); }
+
+  .type-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    margin-bottom: 4px;
+  }
+  .type-blurb {
+    font-size: 12px;
+    color: var(--color-text-secondary);
+    line-height: 1.5;
+  }
+  .detail-panel {
+    background: var(--color-background-secondary);
+    border: 0.5px solid var(--color-border-secondary);
+    border-radius: var(--border-radius-lg);
+    padding: 18px 20px;
+    margin-top: 0;
+    display: none;
+    animation: fadeIn 0.18s ease;
+  }
+  .detail-panel.visible { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
+  .panel-title {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .panel-body { font-size: 13px; color: var(--color-text-secondary); line-height: 1.65; }
+  .panel-body b { color: var(--color-text-primary); font-weight: 500; }
+  .example-box {
+    margin-top: 12px;
+    background: var(--color-background-primary);
+    border-left: 2px solid var(--color-border-info);
+    border-radius: 0 var(--border-radius-md) var(--border-radius-md) 0;
+    padding: 10px 14px;
+    font-size: 12px;
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+  }
+  .example-box .eq { font-style: italic; color: var(--color-text-primary); }
+  .tip-row {
+    display: flex;
+    gap: 6px;
+    align-items: flex-start;
+    margin-top: 10px;
+    font-size: 12px;
+    color: var(--color-text-secondary);
+  }
+  .tip-icon { flex-shrink: 0; color: var(--color-text-warning); font-size: 13px; }
+  .close-btn {
+    float: right;
+    font-size: 12px;
+    color: var(--color-text-tertiary);
+    cursor: pointer;
+    padding: 2px 6px;
+    border-radius: 4px;
+  }
+  .close-btn:hover { background: var(--color-background-primary); color: var(--color-text-secondary); }
+</style>
+
+<div style="padding: 1.5rem 0 0.5rem;">
+  <div class="root-card">
+    <div class="root-label">Category A</div>
+    <div class="root-title">Information & Ideas</div>
+    <div class="root-sub">~26% of R&W section</div>
+  </div>
+
+  <div class="connector-area" style="margin-top:0;">
+    <div class="connector-area" style="width:100%;position:relative;height:28px;">
+      <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:var(--color-border-secondary);"></div>
+      <div style="position:absolute;top:0;left:25%;right:25%;height:1px;background:var(--color-border-secondary);"></div>
+    </div>
+  </div>
+
+  <div class="branch-row">
+
+    <!-- Central Ideas & Details -->
+    <div class="branch-col">
+      <div class="branch-line"></div>
+      <div class="type-card" id="card-a" onclick="toggle('a')">
+        <div class="type-tag tag-a">Sub-type 1</div>
+        <div class="type-title">Central ideas & details</div>
+        <div class="type-blurb">What is the passage mainly about? What specific detail does it mention?</div>
+      </div>
+    </div>
+
+    <!-- Inferences -->
+    <div class="branch-col">
+      <div class="branch-line"></div>
+      <div class="type-card" id="card-b" onclick="toggle('b')">
+        <div class="type-tag tag-b">Sub-type 2</div>
+        <div class="type-title">Inferences</div>
+        <div class="type-blurb">What can be logically concluded from the passage, even if not stated directly?</div>
+      </div>
+    </div>
+
+    <!-- Command of Evidence: Textual -->
+    <div class="branch-col" style="margin-top:0;">
+      <div class="branch-line" style="height:12px;"></div>
+      <div class="type-card" id="card-c" onclick="toggle('c')">
+        <div class="type-tag tag-c">Sub-type 3</div>
+        <div class="type-title">Command of evidence — textual</div>
+        <div class="type-blurb">Which quote from the passage best supports a given claim or conclusion?</div>
+      </div>
+    </div>
+
+    <!-- Command of Evidence: Quantitative -->
+    <div class="branch-col" style="margin-top:0;">
+      <div class="branch-line" style="height:12px;"></div>
+      <div class="type-card" id="card-d" onclick="toggle('d')">
+        <div class="type-tag tag-d">Sub-type 4</div>
+        <div class="type-title">Command of evidence — quantitative</div>
+        <div class="type-blurb">What does a table or graph tell us? Does data support or weaken the claim?</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Detail panels -->
+  <div class="detail-panel" id="panel-a">
+    <div class="panel-title">
+      <span class="type-tag tag-a" style="margin:0;">Sub-type 1</span>
+      Central ideas & details
+      <span class="close-btn" onclick="close('a')">✕ close</span>
+    </div>
+    <div class="panel-body">
+      These questions test whether the student can identify <b>what a passage is primarily about</b> (central idea) or locate a <b>specific piece of information</b> explicitly stated in the text (detail).<br><br>
+      Central idea questions ask about the whole passage. Detail questions ask about one specific fact, reason, or description.
+    </div>
+    <div class="example-box">
+      <div class="eq">"Which choice best states the main purpose of the text?"</div>
+      <div style="margin-top:6px;"><b>Strategy:</b> Read the full passage and ask — what is the author's main point? Eliminate answers that are too narrow (only one detail) or too broad.</div>
+    </div>
+    <div class="tip-row"><span class="tip-icon">★</span> Wrong answers for central idea questions often pick a true detail from the passage but miss the overall point.</div>
+  </div>
+
+  <div class="detail-panel" id="panel-b">
+    <div class="panel-title">
+      <span class="type-tag tag-b" style="margin:0;">Sub-type 2</span>
+      Inferences
+      <span class="close-btn" onclick="close('b')">✕ close</span>
+    </div>
+    <div class="panel-body">
+      These go one step beyond what the passage says. Students must use the passage's information to draw a <b>reasonable logical conclusion</b> — something the author implies but doesn't state outright.
+    </div>
+    <div class="example-box">
+      <div class="eq">"Based on the text, what can most reasonably be inferred about the researcher's findings?"</div>
+      <div style="margin-top:6px;"><b>Strategy:</b> The correct answer will always be directly supportable from the text. Eliminate answers that go too far or bring in outside assumptions.</div>
+    </div>
+    <div class="tip-row"><span class="tip-icon">★</span> The most common trap: an answer that sounds logical from general knowledge but isn't backed by the passage. The passage is always your only source.</div>
+  </div>
+
+  <div class="detail-panel" id="panel-c">
+    <div class="panel-title">
+      <span class="type-tag tag-c" style="margin:0;">Sub-type 3</span>
+      Command of evidence — textual
+      <span class="close-btn" onclick="close('c')">✕ close</span>
+    </div>
+    <div class="panel-body">
+      These come in pairs. The first question asks for a conclusion; the second asks <b>which lines from the passage best support</b> that conclusion. Sometimes both questions are fused into one.<br><br>
+      They test whether students can find the specific textual evidence behind an idea — not just guess.
+    </div>
+    <div class="example-box">
+      <div class="eq">"Which quotation from the text most effectively illustrates the claim made in the previous question?"</div>
+      <div style="margin-top:6px;"><b>Strategy:</b> Work backwards — confirm your answer to Q1 first. Then find the quote that directly proves it, not one that's just nearby or related.</div>
+    </div>
+    <div class="tip-row"><span class="tip-icon">★</span> Wrong quotes are often from the same paragraph as the correct one. They sound relevant but prove a slightly different point.</div>
+  </div>
+
+  <div class="detail-panel" id="panel-d">
+    <div class="panel-title">
+      <span class="type-tag tag-d" style="margin:0;">Sub-type 4</span>
+      Command of evidence — quantitative
+      <span class="close-btn" onclick="close('c')">✕ close</span>
+    </div>
+    <div class="panel-body">
+      These pair a short passage with a <b>table, chart, or graph</b>. Students must interpret the data and determine whether it supports, undermines, or is unrelated to a claim in the passage.<br><br>
+      No math is required — only the ability to read data carefully.
+    </div>
+    <div class="example-box">
+      <div class="eq">"Which choice most effectively uses data from the table to support the student's claim?"</div>
+      <div style="margin-top:6px;"><b>Strategy:</b> Always read the table's title, axis labels, and units before looking at the data. Many students lose points by misreading what the table actually shows.</div>
+    </div>
+    <div class="tip-row"><span class="tip-icon">★</span> A very common wrong answer uses real numbers from the table but applies them to the wrong row, column, or comparison.</div>
+  </div>
+
+</div>
+
+<script>
+  const panels = { a: 'panel-a', b: 'panel-b', c: 'panel-c', d: 'panel-d' };
+  const cards  = { a: 'card-a',  b: 'card-b',  c: 'card-c',  d: 'card-d'  };
+  let active = null;
+
+  function toggle(id) {
+    if (active === id) {
+      close(id);
+      return;
+    }
+    if (active) close(active);
+    document.getElementById(panels[id]).classList.add('visible');
+    document.getElementById(cards[id]).classList.add('active');
+    active = id;
+    setTimeout(() => document.getElementById(panels[id]).scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 50);
+  }
+
+  function close(id) {
+    document.getElementById(panels[id]).classList.remove('visible');
+    document.getElementById(cards[id]).classList.remove('active');
+    if (active === id) active = null;
+  }
+</script>

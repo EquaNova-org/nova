@@ -1,0 +1,76 @@
+
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+.root-card { background: var(--color-background-primary); border: 2px solid var(--color-border-warning); border-radius: var(--border-radius-lg); padding: 14px 20px; text-align: center; max-width: 260px; margin: 0 auto; }
+.root-label { font-size: 11px; letter-spacing: 2px; color: var(--color-text-warning); text-transform: uppercase; font-weight: 500; margin-bottom: 4px; }
+.root-title { font-size: 16px; font-weight: 500; color: var(--color-text-primary); }
+.root-sub { font-size: 12px; color: var(--color-text-secondary); margin-top: 2px; }
+.h-bar { position: relative; height: 28px; }
+.h-bar::before { content: ''; position: absolute; left: 50%; top: 0; width: 1px; height: 100%; background: var(--color-border-secondary); }
+.h-bar::after { content: ''; position: absolute; top: 0; left: 25%; right: 25%; height: 1px; background: var(--color-border-secondary); }
+.branch-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+.branch-col { display: flex; flex-direction: column; align-items: center; }
+.branch-line { width: 1px; height: 24px; background: var(--color-border-secondary); }
+.type-card { width: 100%; background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 14px 16px; cursor: pointer; transition: border-color 0.15s, background 0.15s; user-select: none; }
+.type-card:hover { border-color: var(--color-border-warning); background: var(--color-background-secondary); }
+.type-card.active { border-width: 1.5px; border-color: var(--color-border-warning); background: var(--color-background-warning); }
+.type-tag { display: inline-block; font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 500; padding: 2px 8px; border-radius: 20px; margin-bottom: 8px; }
+.tag-1 { background: var(--color-background-warning); color: var(--color-text-warning); }
+.tag-2 { background: var(--color-background-success); color: var(--color-text-success); }
+.type-title { font-size: 14px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 4px; }
+.type-blurb { font-size: 12px; color: var(--color-text-secondary); line-height: 1.5; }
+.detail-panel { background: var(--color-background-secondary); border: 0.5px solid var(--color-border-secondary); border-radius: var(--border-radius-lg); padding: 18px 20px; display: none; }
+.detail-panel.visible { display: block; }
+.panel-title { font-size: 13px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 10px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.panel-body { font-size: 13px; color: var(--color-text-secondary); line-height: 1.65; }
+.panel-body b { color: var(--color-text-primary); font-weight: 500; }
+.example-box { margin-top: 12px; background: var(--color-background-primary); border-left: 2px solid var(--color-border-warning); border-radius: 0 var(--border-radius-md) var(--border-radius-md) 0; padding: 10px 14px; font-size: 12px; color: var(--color-text-secondary); line-height: 1.6; }
+.example-box .eq { font-style: italic; color: var(--color-text-primary); }
+.tip-row { display: flex; gap: 6px; align-items: flex-start; margin-top: 10px; font-size: 12px; color: var(--color-text-secondary); }
+.tip-icon { flex-shrink: 0; color: var(--color-text-warning); }
+.close-btn { margin-left: auto; font-size: 12px; color: var(--color-text-tertiary); cursor: pointer; padding: 2px 6px; border-radius: 4px; }
+.close-btn:hover { background: var(--color-background-primary); }
+</style>
+<div style="padding:1.5rem 0 0.5rem;">
+  <div class="root-card">
+    <div class="root-label">Category C</div>
+    <div class="root-title">Expression of Ideas</div>
+    <div class="root-sub">~20% of R&amp;W section</div>
+  </div>
+  <div class="h-bar"></div>
+  <div class="branch-row">
+    <div class="branch-col">
+      <div class="branch-line"></div>
+      <div class="type-card" id="card-1" onclick="tog('1')">
+        <div class="type-tag tag-1">Sub-type 1</div>
+        <div class="type-title">Rhetorical synthesis</div>
+        <div class="type-blurb">Given a set of notes, which sentence best accomplishes a specific writing goal?</div>
+      </div>
+    </div>
+    <div class="branch-col">
+      <div class="branch-line"></div>
+      <div class="type-card" id="card-2" onclick="tog('2')">
+        <div class="type-tag tag-2">Sub-type 2</div>
+        <div class="type-title">Transitions</div>
+        <div class="type-blurb">Which transition word or phrase best connects two ideas or sentences logically?</div>
+      </div>
+    </div>
+  </div>
+  <div class="detail-panel" id="panel-1">
+    <div class="panel-title"><span class="type-tag tag-1" style="margin:0">Sub-type 1</span> Rhetorical synthesis <span class="close-btn" onclick="cls('1')">✕ close</span></div>
+    <div class="panel-body">These are unique to the digital SAT. The student is given <b>a set of bullet-point notes</b> (as if taken by a researcher or student) and must choose the answer that best synthesises those notes to accomplish a specific goal — for example, "to emphasise a contrast" or "to introduce the study to a general audience."<br><br>Both the content (what information is included) and the rhetoric (how it's framed) must match the stated goal.</div>
+    <div class="example-box"><div class="eq">"The student wants to emphasise the unexpected nature of the finding. Which choice most effectively uses relevant information from the notes to accomplish this goal?"</div><div style="margin-top:6px"><b>Strategy:</b> First, identify the exact goal in the question. Then eliminate answers that include irrelevant notes or frame the information in a way that doesn't match the goal.</div></div>
+    <div class="tip-row"><span class="tip-icon">★</span> Wrong answers often include accurate information from the notes but miss the rhetorical goal (e.g., they summarise instead of emphasising contrast).</div>
+  </div>
+  <div class="detail-panel" id="panel-2">
+    <div class="panel-title"><span class="type-tag tag-2" style="margin:0">Sub-type 2</span> Transitions <span class="close-btn" onclick="cls('2')">✕ close</span></div>
+    <div class="panel-body">These present two sentences or a sentence with a blank and ask which <b>transition word or phrase</b> best connects the ideas. The relationship between the two ideas determines the right transition — contrast, addition, cause-effect, example, concession, etc.</div>
+    <div class="example-box"><div class="eq">"Which choice completes the text with the most logical transition?"</div><div style="margin-top:6px"><b>Strategy:</b> Before looking at the options, read both sentences and ask yourself — does the second idea agree, disagree, add to, or result from the first? Then pick the transition that matches that relationship.</div></div>
+    <div class="tip-row"><span class="tip-icon">★</span> Many students choose a transition that sounds sophisticated (e.g., "nonetheless") without checking whether the logical relationship actually calls for contrast. Always match the relationship first.</div>
+  </div>
+</div>
+<script>
+var act=null;
+function tog(id){if(act===id){cls(id);return;}if(act)cls(act);document.getElementById('panel-'+id).classList.add('visible');document.getElementById('card-'+id).classList.add('active');act=id;}
+function cls(id){document.getElementById('panel-'+id).classList.remove('visible');document.getElementById('card-'+id).classList.remove('active');if(act===id)act=null;}
+</script>

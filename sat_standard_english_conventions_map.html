@@ -1,0 +1,93 @@
+
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+.root-card { background: var(--color-background-primary); border: 2px solid var(--color-border-danger); border-radius: var(--border-radius-lg); padding: 14px 20px; text-align: center; max-width: 260px; margin: 0 auto; }
+.root-label { font-size: 11px; letter-spacing: 2px; color: var(--color-text-danger); text-transform: uppercase; font-weight: 500; margin-bottom: 4px; }
+.root-title { font-size: 16px; font-weight: 500; color: var(--color-text-primary); }
+.root-sub { font-size: 12px; color: var(--color-text-secondary); margin-top: 2px; }
+.h-bar { position: relative; height: 28px; }
+.h-bar::before { content: ''; position: absolute; left: 50%; top: 0; width: 1px; height: 100%; background: var(--color-border-secondary); }
+.h-bar::after { content: ''; position: absolute; top: 0; left: 25%; right: 25%; height: 1px; background: var(--color-border-secondary); }
+.branch-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+.branch-col { display: flex; flex-direction: column; align-items: center; }
+.branch-line { width: 1px; height: 24px; background: var(--color-border-secondary); }
+.type-card { width: 100%; background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 14px 16px; cursor: pointer; transition: border-color 0.15s, background 0.15s; user-select: none; }
+.type-card:hover { border-color: var(--color-border-danger); background: var(--color-background-secondary); }
+.type-card.active { border-width: 1.5px; border-color: var(--color-border-danger); background: var(--color-background-danger); }
+.type-tag { display: inline-block; font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 500; padding: 2px 8px; border-radius: 20px; margin-bottom: 8px; }
+.tag-1 { background: var(--color-background-danger); color: var(--color-text-danger); }
+.tag-2 { background: var(--color-background-info); color: var(--color-text-info); }
+.type-title { font-size: 14px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 4px; }
+.type-blurb { font-size: 12px; color: var(--color-text-secondary); line-height: 1.5; }
+.detail-panel { background: var(--color-background-secondary); border: 0.5px solid var(--color-border-secondary); border-radius: var(--border-radius-lg); padding: 18px 20px; display: none; }
+.detail-panel.visible { display: block; }
+.panel-title { font-size: 13px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 10px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.panel-body { font-size: 13px; color: var(--color-text-secondary); line-height: 1.65; }
+.panel-body b { color: var(--color-text-primary); font-weight: 500; }
+.example-box { margin-top: 12px; background: var(--color-background-primary); border-left: 2px solid var(--color-border-danger); border-radius: 0 var(--border-radius-md) var(--border-radius-md) 0; padding: 10px 14px; font-size: 12px; color: var(--color-text-secondary); line-height: 1.6; }
+.example-box .eq { font-style: italic; color: var(--color-text-primary); }
+.rules-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; }
+.rule-chip { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); padding: 8px 12px; font-size: 12px; color: var(--color-text-secondary); }
+.rule-chip b { color: var(--color-text-primary); font-weight: 500; display: block; margin-bottom: 2px; }
+.tip-row { display: flex; gap: 6px; align-items: flex-start; margin-top: 10px; font-size: 12px; color: var(--color-text-secondary); }
+.tip-icon { flex-shrink: 0; color: var(--color-text-warning); }
+.close-btn { margin-left: auto; font-size: 12px; color: var(--color-text-tertiary); cursor: pointer; padding: 2px 6px; border-radius: 4px; }
+.close-btn:hover { background: var(--color-background-primary); }
+</style>
+<div style="padding:1.5rem 0 0.5rem;">
+  <div class="root-card">
+    <div class="root-label">Category D</div>
+    <div class="root-title">Standard English Conventions</div>
+    <div class="root-sub">~26% of R&amp;W section</div>
+  </div>
+  <div class="h-bar"></div>
+  <div class="branch-row">
+    <div class="branch-col">
+      <div class="branch-line"></div>
+      <div class="type-card" id="card-1" onclick="tog('1')">
+        <div class="type-tag tag-1">Sub-type 1</div>
+        <div class="type-title">Boundaries</div>
+        <div class="type-blurb">Is this sentence punctuated correctly? Are clauses and sentence boundaries properly marked?</div>
+      </div>
+    </div>
+    <div class="branch-col">
+      <div class="branch-line"></div>
+      <div class="type-card" id="card-2" onclick="tog('2')">
+        <div class="type-tag tag-2">Sub-type 2</div>
+        <div class="type-title">Form, structure &amp; sense</div>
+        <div class="type-blurb">Is the correct verb form, pronoun, or modifier used? Does the sentence make grammatical sense?</div>
+      </div>
+    </div>
+  </div>
+  <div class="detail-panel" id="panel-1">
+    <div class="panel-title"><span class="type-tag tag-1" style="margin:0">Sub-type 1</span> Boundaries <span class="close-btn" onclick="cls('1')">✕ close</span></div>
+    <div class="panel-body">Boundary questions test whether students can <b>correctly punctuate sentences</b> — especially the borders between independent clauses, dependent clauses, and phrases. The core skill is recognising what kind of grammatical unit each part of the sentence is, then applying the right punctuation rule.<br><br>These cover: run-on sentences, comma splices, sentence fragments, and how to use punctuation marks (period, semicolon, comma, colon, dash) to separate or join clauses correctly.</div>
+    <div class="rules-grid">
+      <div class="rule-chip"><b>Period / semicolon</b>Joins two independent clauses as separate sentences</div>
+      <div class="rule-chip"><b>Comma + conjunction</b>Joins two independent clauses (FANBOYS: for, and, nor, but, or, yet, so)</div>
+      <div class="rule-chip"><b>Colon / dash</b>Introduces an explanation, list, or elaboration after a complete clause</div>
+      <div class="rule-chip"><b>Comma alone</b>Cannot join two independent clauses — that's a comma splice</div>
+    </div>
+    <div class="example-box"><div class="eq">"Which choice completes the text so that it conforms to the conventions of Standard English?"</div><div style="margin-top:6px"><b>Strategy:</b> Identify what comes before and after the blank. Is each part an independent clause? A dependent clause? A phrase? Match the punctuation to the grammatical relationship.</div></div>
+    <div class="tip-row"><span class="tip-icon">★</span> The comma splice is the single most tested error in this category — two independent clauses joined by only a comma. Learn to spot it instantly.</div>
+  </div>
+  <div class="detail-panel" id="panel-2">
+    <div class="panel-title"><span class="type-tag tag-2" style="margin:0">Sub-type 2</span> Form, structure &amp; sense <span class="close-btn" onclick="cls('2')">✕ close</span></div>
+    <div class="panel-body">These test a wider range of grammar rules focused on <b>choosing the correct word form</b> to make the sentence grammatically accurate and clear. If Boundaries is about punctuation, this sub-type is about everything else in grammar.</div>
+    <div class="rules-grid">
+      <div class="rule-chip"><b>Subject-verb agreement</b>Verb must match its subject in number, not the nearest noun</div>
+      <div class="rule-chip"><b>Verb tense &amp; mood</b>Tense must be consistent and logical within the passage's timeline</div>
+      <div class="rule-chip"><b>Pronoun agreement</b>Pronoun must match its antecedent in number and gender</div>
+      <div class="rule-chip"><b>Modifiers</b>Descriptive phrases must be placed next to what they describe</div>
+      <div class="rule-chip"><b>Parallel structure</b>Items in a list or comparison must use the same grammatical form</div>
+      <div class="rule-chip"><b>Possessives vs plurals</b>Apostrophe placement determines meaning (its vs it's, etc.)</div>
+    </div>
+    <div class="example-box"><div class="eq">"Which choice completes the text so that it conforms to the conventions of Standard English?"</div><div style="margin-top:6px"><b>Strategy:</b> Look at what the question is really testing — identify the subject, verb, pronoun, or modifier in question, then apply the relevant rule. Don't rely on "what sounds right."</div></div>
+    <div class="tip-row"><span class="tip-icon">★</span> Subject-verb agreement errors often hide by placing a long phrase between the subject and verb (e.g., "The results of the study <i>was</i>..." — the subject is "results," not "study").</div>
+  </div>
+</div>
+<script>
+var act=null;
+function tog(id){if(act===id){cls(id);return;}if(act)cls(act);document.getElementById('panel-'+id).classList.add('visible');document.getElementById('card-'+id).classList.add('active');act=id;}
+function cls(id){document.getElementById('panel-'+id).classList.remove('visible');document.getElementById('card-'+id).classList.remove('active');if(act===id)act=null;}
+</script>
